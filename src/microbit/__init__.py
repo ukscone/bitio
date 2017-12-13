@@ -53,7 +53,7 @@ if SERIAL_PATH not in sys.path:
     sys.path.insert(0, SERIAL_PATH)
 
 try:
-    import serial
+    from . import serial
 except ImportError as e:
     info("Can't find pyserial on your system")
     if DEBUG:
