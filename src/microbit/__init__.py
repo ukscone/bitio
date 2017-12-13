@@ -75,16 +75,23 @@ else:
 # reuse or scan for a new port
 trace("will reuse cache or scan for new port")
 
-name = portscan.getName(DEVICE_NAME)
-if name != None:
-    if DEBUG:
-        trace("Using port:" + name)
-    PORT = name
-else:
-    name = portscan.find()
-    if name == None:
-        fail("No port selected, giving in")
-    PORT = name
+import builtins
+try:
+    PORT=builtins.COMPORT
+    trace("Using requested port name, not cached")
+except AttributeError:
+    trace("No passed port name")
+    name = portscan.getName(DEVICE_NAME)
+    if name != None:
+        if DEBUG:
+            trace("Using port:" + name)
+        PORT = name
+    else:
+        name = portscan.find()
+        if name == None:
+            fail("No port selected, giving in")
+        PORT = name
+
 
 
 #----- CONNECT TO SERIAL ------------------------------------------------------
